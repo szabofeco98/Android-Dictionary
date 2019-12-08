@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
-        <variable
-            name="data"
-            type="com.example.myapplication.MyName" />
-    </data>
+
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,14 +12,14 @@
         android:id="@+id/main">
 
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:background="?colorPrimary"
-                android:theme="@style/ToolbarTheme"
-                 />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="?colorPrimary"
+            android:theme="@style/ToolbarTheme"
+             />
 
         <fragment
             android:id="@+id/myNavHostFragment"
