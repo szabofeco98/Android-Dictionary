@@ -1,26 +1,35 @@
 package com.example.myapplication.userFragments.viewmodel
 
 import android.app.Application
-import android.os.CountDownTimer
-import android.text.format.DateUtils
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.util.Log
-import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.R
 import com.example.myapplication.database.dao.UserDao
 import com.example.myapplication.database.model.User
+import kotlinx.coroutines.*
+
 
 class LoginViewModel( val database: UserDao, application: Application) : ViewModel() {
+    private var viewModelJob = Job()
 
-    private var users=database.getAllUser()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    private  var usersFromDb=database.getAllUser()
+
+    private lateinit var users:List<User>
 
     private var _user= MutableLiveData<User>()
     val user:LiveData<User>
     get()=_user
+
+    init {
+       initUsers()
+    }
 
     val stringUser=Transformations.map(user){
         user -> user.toString()
@@ -28,23 +37,28 @@ class LoginViewModel( val database: UserDao, application: Application) : ViewMod
 
     fun login(user: User?):Boolean{
         var valid=false
+        
         _user.value=user
-        users.observeForever {
-            x->for(y:User in x){
-                valid= (y.username ==_user.value?.username)&&(y.password== _user.value?.password)
-                if(valid){
-                    break
-                }
+        Log.e("u",users.toString())
+        for(u in users){
+            valid=(u.username==user?.username)&&(u.password==user.password)
+            if(valid){
+                break
             }
         }
         this._user.value=user
         return valid
     }
 
-    fun test(){
-        users.observeForever {
-                x->Log.d("t",x.toString())
+
+    fun initUsers(){
+        usersFromDb.observeForever {
+                x->users = x
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }

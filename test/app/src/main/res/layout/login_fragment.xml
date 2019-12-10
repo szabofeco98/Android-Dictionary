@@ -15,13 +15,7 @@
     android:layout_height="match_parent"
     tools:context=".userFragments.fragment.LoginFragment">
 
-    <Button
-        android:id="@+id/test"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/test"
-        android:onClick="@{()->model.test()}"
-        />
+
 
     <Button
         android:id="@+id/login"

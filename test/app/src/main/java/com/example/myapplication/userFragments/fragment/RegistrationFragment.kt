@@ -1,6 +1,7 @@
 package com.example.myapplication.userFragments.fragment
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.example.myapplication.userFragments.viewmodel.RegistrationViewModel
 
 
 class RegistrationFragment : Fragment() {
+
     private lateinit var binding: RegistrationFragmentBinding
 
     private val user: User = User()
@@ -63,9 +65,7 @@ class RegistrationFragment : Fragment() {
 
               Log.i("user",user.toString())
 
-              val reg :String?=viewModel.registration(user)
-
-              Log.e("logged",reg!!)
+              viewModel.registration(user)
 
           }
       }

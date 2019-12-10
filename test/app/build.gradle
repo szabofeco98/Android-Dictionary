@@ -16,7 +16,7 @@ buildscript {
         supportlibVersion = '1.0.0-rc03'
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
         navigationVersion = '1.0.0-rc02'
-        lifecycle_version="2.1.0"
+        lifecycle_version = "2.1.0"
     }
     repositories {
         google()
@@ -75,4 +75,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }

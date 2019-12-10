@@ -1,8 +1,10 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 
@@ -17,7 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    lateinit var preferences:SharedPreferences
+
     public override fun onCreate(savedInstanceState: Bundle?) {
+        preferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
@@ -31,12 +37,13 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupActionBarWithNavController(this, navController)
 
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController,null)
-
     }
 
-
+    override fun onBackPressed() {
+    }
 }

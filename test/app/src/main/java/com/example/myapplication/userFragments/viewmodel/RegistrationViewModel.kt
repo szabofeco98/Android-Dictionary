@@ -8,9 +8,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.database.dao.UserDao
 import com.example.myapplication.database.model.User
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 
 class RegistrationViewModel(val database: UserDao, application: Application)  : ViewModel() {
 
@@ -26,15 +24,28 @@ class RegistrationViewModel(val database: UserDao, application: Application)  : 
             user -> user.toString()
     }
 
-
     fun registration(user:User?):String?{
         this._user.value=user
 
         if(_user.value==null){
             Log.e("bug","user error")
-        }else Log.d("user",_user.value!!.toString())
-        Log.d("insert",database.insert(_user.value!!).toString())
+        }else{
+            uiScope.launch {
+                insert(_user.value!!)
+            }
+        }
 
-        return _user.value?.username
+        return stringUser.value
+    }
+
+    private suspend fun insert(user: User){
+        withContext(Dispatchers.IO){
+             database.insert(user)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }
