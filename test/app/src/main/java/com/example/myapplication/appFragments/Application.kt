@@ -1,5 +1,6 @@
 package com.example.myapplication.appFragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
@@ -9,7 +10,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.myapplication.AppActivity
 import com.example.myapplication.MainActivity
 
@@ -30,6 +34,7 @@ class Application : Fragment() {
 
     private lateinit var viewModel: ApplicationViewModel
 
+    @SuppressLint("WrongConstant")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,17 +48,23 @@ class Application : Fragment() {
 
         viewModel =  ViewModelProviders.of(this,viewModelFactory).get(ApplicationViewModel::class.java)
 
-        Log.d("words",dataSource.getAllWord().value.toString())
+        val adapter = WordAdapter(WordListener { wordId ->
+           val toast= Toast.makeText(context, "${wordId}", Toast.LENGTH_LONG)
+            toast.show()
+            toast.duration=20
+            //  viewModel.onSleepNightClicked(wordId)
+        })
 
-        val words = ArrayList<Word>()
-        words.add(Word(1,"sasa","en"))
-        words.add(Word(2,"g","w"))
-        words.add(Word(3,"sasa","en"))
-        words.add(Word(4,"g","w"))
-        val adapter=WordAdapter()
-        adapter.words=words
-        adapter.submitList(words)
+        viewModel.words.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.addHeaderAndSubmitList(it)
+            }
+        })
+
         binding.wordList.adapter=adapter
+        binding.json.setOnClickListener {
+            goJson()
+        }
 
         return binding.root
     }
@@ -61,6 +72,11 @@ class Application : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         // TODO: Use the ViewModel
+    }
+
+    fun goJson(){
+        val action=ApplicationDirections.actionApplicationToJsonFragment()
+        view!!.findNavController().navigate(action)
     }
 
     fun setApp(){

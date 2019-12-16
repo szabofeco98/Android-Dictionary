@@ -68,4 +68,8 @@ class AppActivity : AppCompatActivity(){
 
     override fun onBackPressed() {
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController,null)
+    }
 }

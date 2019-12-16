@@ -7,4 +7,5 @@
     <string name="bejelentkez_s">Bejelentkezés</string>
     <string name="test">test</string>
     <string name="logout">LogOut</string>
+    <string name="header">Szótári Szavak</string>
 </resources>

@@ -7,29 +7,12 @@ import com.example.myapplication.database.model.User
 import com.example.myapplication.database.model.Word
 
 class ApplicationViewModel (val database: WordDao ): ViewModel() {
-    private  var wordFromDb=database.getAllWord()
+    var words=database.getAllWord()
 
-    private lateinit var words:List<Word>
-
-    init {
-        setWords()
-    }
 
     fun insert(word:Word){
         database.insert(word)
     }
 
-    fun setWords(){
-        //Log.d("m","meghibodik")
 
-        wordFromDb.observeForever {
-                x-> words=x
-        }
-      //  Log.e("test",wordFromDb.value.toString())
-    }
-
-    fun getWords():List<Word>{
-        setWords()
-        return words
-    }
 }

@@ -9,5 +9,14 @@
         android:id="@+id/application"
         android:name="com.example.myapplication.appFragments.Application"
         android:label="application_fragment"
-        tools:layout="@layout/application_fragment" />
+        tools:layout="@layout/application_fragment" >
+        <action
+            android:id="@+id/action_application_to_jsonFragment"
+            app:destination="@id/jsonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jsonFragment"
+        android:name="com.example.myapplication.appFragments.json.jsonFragment"
+        android:label="json_fragment"
+        tools:layout="@layout/json_fragment" />
 </navigation>

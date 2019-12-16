@@ -106,6 +106,7 @@ class LoginFragment : Fragment() {
             toast.show()
         }
 
+
     }
 
     fun setApp(){
